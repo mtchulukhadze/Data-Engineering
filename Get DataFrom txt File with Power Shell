@@ -1,0 +1,45 @@
+/*
+
+# ფასის წაკითხვა
+$logFilePath = "D:\Data\Data Engineering\access.log"
+
+# ლოგ კონტექსტის ამოღება
+$logContent = Get-Content -Path $logFilePath
+
+# ქოლუმნის გამოყოფა
+$ipPattern = "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
+
+# IP ების რაოდენობების ჩაყრა
+$ipCounts = @{}
+
+# ლუპის დადება
+foreach ($line in $logContent) {
+    # Check if the line matches the IP address pattern
+    if ($line -match $ipPattern) {
+        # Extract the matched IP address
+        $ipAddress = $matches[0]
+        # Increment the count for this IP address in the hashtable
+        if ($ipCounts.ContainsKey($ipAddress)) {
+            $ipCounts[$ipAddress]++
+        } else {
+            $ipCounts[$ipAddress] = 1
+        }
+    }
+}
+
+# ტოპ 3 IP ის ამოღება 
+if ($ipCounts.Count -eq 0) {
+    Write-Output "No IP addresses found in the log file."
+} else {
+    # Sort the hashtable by value (count) in descending order and select the top 3
+    $topIPs = $ipCounts.GetEnumerator() | Sort-Object Value -Descending | Select-Object -First 3
+
+    # Output the top 3 IP addresses and their counts
+    $topIPs | ForEach-Object { Write-Output "$($_.Key) $($_.Value)" }
+
+    # Optionally, you can save the top IP addresses and their counts to a new file
+    $topIPs | Format-Table -AutoSize | Out-File -FilePath "D:\Data\Data Engineering\top_ip_addresses.txt"
+}
+
+# ახალ ფაილში შენახვა
+$topIPs | Format-Table -AutoSize | Out-File -FilePath "D:\Data\Data Engineering\top_ip_addresses.txt"
