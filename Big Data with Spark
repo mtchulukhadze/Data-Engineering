@@ -1,0 +1,53 @@
+import pyodbc
+import pandas as pd
+
+user = 'DESKTOP-3QJN7S3' + "\)" + "user"  # sql server user name
+user_rep = user.replace(")", "")
+
+conn = pyodbc.connect("Driver={SQL Server};"
+                          "Server=DESKTOP-3QJN7S3;"  # Server name
+                          f"uid={user_rep}"
+                          "Database=data_analysis_project;"  # selected database
+                          "Trusted_Connection=yes;")
+
+cursor = conn.cursor()
+
+try:
+    df = pd.read_sql_query(r"select * from data_analysis_project.dbo.sales", conn)
+except Exception as e:
+    conn.rollback()
+    print(f'error{e}')
+
+# spark Session
+
+from pyspark.sql import SparkSession
+import matplotlib.pyplot as plt
+
+
+spark = SparkSession.builder.appName("IPL").getOrCreate()
+
+spark_df = spark.read.format('csv').option('header', 'true').load(r"D:\Data\Data Engineering\dataset.csv")
+
+try:
+    spark_df.show(5)
+except Exception as e:
+    print(f'Error converting DataFrame to Spark DataFrame: {e}')
+
+
+pandas_df = spark_df.toPandas()
+# ball_by_ball_df.createOrReplaceTempView("employees")
+# print(spark.sql("select * from employees"))
+
+pandas_df['Price'] = pandas_df['Price'].astype(float)
+payment_data = pandas_df.groupby("Payment_Type")['Price'].mean()
+
+payment_data.plot(kind='bar', color='skyblue')
+plt.title('Average Price by Payment Type')
+plt.xlabel('Payment Type')
+plt.ylabel('Average Price')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# Save the plot to a file
+plt.savefig(r"D:\Data\Data Engineering\PlotPic.png")
