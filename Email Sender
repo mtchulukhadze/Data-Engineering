@@ -1,0 +1,23 @@
+from redmail import EmailSender
+
+from pathlib import Path
+import pandas as pd
+
+gmail = EmailSender(
+    host='smtp.gmail.com',
+    port=465,
+    user_name="you@gmail.com",
+    password="<YOUR PASSWORD>"
+)
+
+gmail.send(
+    subject="Python Email",
+    receivers=["you@gmail.com"],
+    text="Here is the message",
+    attachments={
+        # From path on disk
+        "my_file.xlsx": Path("path/to/file.xlsx"),
+        # Or from Pandas dataframe
+        "my_frame.xlsx": pd.DataFrame({"a": [1,2,3]})
+    }
+)
