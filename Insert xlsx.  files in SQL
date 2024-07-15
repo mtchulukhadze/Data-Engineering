@@ -1,0 +1,18 @@
+# import Excel_CSV Files and insert in SQL_Database
+
+from sqlalchemy import create_engine
+import pandas as pd
+
+server = ''
+database = ''
+username = ''
+password = ''
+schema = ''
+
+connection_url = f'mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+17+for+SQL+Server'
+engine = create_engine(connection_url)
+
+table_name = ''
+new_data_dm.to_sql(name=table_name, con=engine, schema=schema, if_exists='replace', index=False)
+
+print(f"DataFrame saved to table '{schema}.{table_name}' in database '{database}'.")
