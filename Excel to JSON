@@ -1,0 +1,62 @@
+
+
+class DataInsert:
+    def __init__(self, path):
+        import pyodbc
+
+        self.path = path
+
+        self.server = 'DESKTOP-3QJN7S3'
+        self.user = 'DESKTOP-3QJN7S3' + "\)" + "user"  # sql server user name
+        self.user_rep = self.user.replace(")", "")
+
+        self.conn = ("Driver={SQL Server};"
+                      f"Server={self.server};"  # Server name
+                      f"uid={self.user_rep}"
+                      "Database=Data_Model;"  # selected database
+                      "Trusted_Connection=yes;")
+
+        self.conn = pyodbc.connect(self.conn)
+        self.cursor = self.conn.cursor()
+
+    def table_create(self):
+        try:
+            self.cursor.execute('''create table Data_Model.dbo.xml_table (BusinessEntityID int, TerritoryID float, SalesQuota float, Bonus int, CommissionPct float,
+            SalesYTD float, SalesLastYear float, rowguid varchar(max), ModifiedDate date)
+            '''),
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+
+    def data_insert(self):
+        import pandas as pd
+
+        df = self.path
+        dataframe = pd.read_excel(df)
+
+        for index, row in dataframe.iterrows():
+            try:
+                self.cursor.execute('''
+                    insert into Data_Model.dbo.xml_table(BusinessEntityID, TerritoryID, SalesQuota, Bonus, CommissionPct, SalesYTD, SalesLastYear, rowguid, ModifiedDate)
+                    values(?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', row['BusinessEntityID'], row['TerritoryID'], row['SalesQuota'], row['Bonus'], row['CommissionPct'],
+                row['SalesYTD'], row['SalesLastYear'], row['rowguid'], row['ModifiedDate']
+                                    ),
+                self.cursor.commit()
+            except Exception as e:
+                print(e)
+
+cls = DataInsert(r'D:\Data\ms sql\XML_Files\Oto\Exel.xlsx')
+cls.table_create()
+cls.data_insert()
+
+
+
+/*
+-------------------------------------------------------
+JSON File
+-------------------------------------------------------
+*/
+
+declare @json xml = (select * from Data_Model.dbo.xml_table for json auto)
+select @json
