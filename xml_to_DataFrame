@@ -1,0 +1,188 @@
+
+
+
+xml_file = '''
+<root>
+  <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+</root>
+'''
+
+import xml.etree.ElementTree as ET
+root = ET.fromstring(xml_file)
+
+import pandas as pd
+persons = []
+for person in root.findall('person'):
+    name = person.find('name').text
+    age = person.find('age').text
+    email = person.find('email').text
+    persons.append({'name': name, 'age': age, 'email': email})
+    #print(f'name {name}, age {age}, email{email}')
+
+df = pd.DataFrame(persons)
+
+books = []
+for book in root.findall('book'):
+    title = book.find('title').text
+    author = book.find('author').text
+    year = book.find('year').text
+    books.append({'title': title, 'author': author, 'year': year})
+    
+df2 = pd.DataFrame(books)
+df2
+
+
+#*******************************************************
+
+import xml.etree.ElementTree as ET
+import pandas as pd
+
+xml_data = pd.read_xml(r'D:\Data\ms sql\XML_Files\sample2.xml')
+xml_data
+
+xml_path = '''
+<root>
+  <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+    <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+    <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+    <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+    <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+    <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+    <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+    <person>
+    <name>John Doe</name>
+    <age>30</age>
+    <email>john.doe@example.com</email>
+  </person>
+  <person>
+    <name>Jane Smith</name>
+    <age>25</age>
+    <email>jane.smith@example.com</email>
+  </person>
+  <book>
+    <title>The Adventure Begins</title>
+    <author>Robert Johnson</author>
+    <year>2022</year>
+  </book>
+</root>
+'''
+root = ET.fromstring(xml_path)
+
+for per in root.findall('person'):
+    name = per.find('name').text,
+    age = per.find('age').text,
+    email = per.find('email').text
+    print({'name': name, 'age': age, 'email': email})
+    
