@@ -1,0 +1,57 @@
+
+import schedule
+
+def GenerateData():
+
+    from bs4 import BeautifulSoup
+    import requests
+    import pyodbc
+    import datetime
+
+    url = "https://weather.com/weather/today/l/624f0cccc10bececfa4c083056cef743837a76588790f476c9ebea44be35e51f"
+    req = requests.get(url)
+
+    soup = BeautifulSoup(req.text, "html.parser")
+
+    weather_blocks = soup.find_all('div', class_='CurrentConditions--primary--A+Brf')
+    temp = soup.find_all('span', class_='CurrentConditions--tempValue--zUBSz')
+
+
+    for weather in temp:
+        val = weather.text.split()
+
+    val = int(val[0].replace('°', ''))
+
+
+    user = 'DESKTOP-3QJN7S3' + "\)" + "user"  # sql server user name
+    user_rep = user.replace(")", "")
+
+    conn = pyodbc.connect("Driver={SQL Server};"
+                          "Server=DESKTOP-3QJN7S3;"  # Server name
+                          f"uid={user_rep}"
+                          "Database=Data_Model;"  # selected database
+                          "Trusted_Connection=yes;")
+
+    cursor = conn.cursor()
+
+    # try:
+    #     conn.execute('''create table Data_Model.dbo.Weather_Table (Gr int, Dt datetime)''')
+    #     conn.commit()
+    #
+    # except Exception as e:
+    #     print(e)
+
+    try:
+        conn.execute(
+            '''insert into Data_Model.dbo.Weather_Table (Gr, Dt) values (?, ?)''', (val, datetime.datetime.now()))
+        conn.commit()
+    except Exception as e:
+        conn.rollback
+        print(f'error{e}')
+
+
+# print(pd.read_sql_query("select * from Data_Model.dbo.Weather_Table", conn))
+
+schedule.every().minute.do(GenerateData())
+while True:
+    schedule.run_pending()
