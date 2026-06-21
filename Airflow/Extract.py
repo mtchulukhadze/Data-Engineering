@@ -11,8 +11,8 @@ def extract_products():
 
     data = response.json()
 
-    data2 = pd.DataFrame(data)
-    return data2
+    products = pd.DataFrame(data)
+    return products
 
 
 def extract_user():
@@ -22,5 +22,5 @@ def extract_user():
 
     data = response.json()
 
-    data2 = pd.DataFrame(data)
-    return data2
+    user = pd.DataFrame(data)
+    return user
