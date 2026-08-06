@@ -1,0 +1,459 @@
+PS C:\Users\mikheilitchulukhadze> irm https://public.cdn.getdbt.com/dbt-wizard/install/install-wizard.ps1 | iex; if ($?) { wizard }
+install-wizard.ps1: Resolving latest dbt-wizard version from CDN...
+install-wizard.ps1: Using version: 0.1.1-beta.120                                                                                                               
+install-wizard.ps1: Version:  0.1.1-beta.120                                                                                                                    
+install-wizard.ps1: Platform: x86_64-pc-windows-msvc                                                                                                            
+install-wizard.ps1: Dest:     C:\Users\mikheilitchulukhadze\.local\bin                                                                                          
+install-wizard.ps1: 
+[2/3] Extracting...
+[3/3] Installing to C:\Users\mikheilitchulukhadze\.local\bin...
+install-wizard.ps1: 
+install-wizard.ps1: Installed dbt-wizard v0.1.1-beta.120 to C:\Users\mikheilitchulukhadze\.local\bin:
+install-wizard.ps1:   C:\Users\mikheilitchulukhadze\.local\bin\dbt-wizard.exe
+install-wizard.ps1:   C:\Users\mikheilitchulukhadze\.local\bin\dbt-index.exe
+install-wizard.ps1:   C:\Users\mikheilitchulukhadze\.local\bin\dbt-wizard-windows-sandbox-setup.exe
+install-wizard.ps1:   C:\Users\mikheilitchulukhadze\.local\bin\dbt-wizard-command-runner.exe
+install-wizard.ps1:   C:\Users\mikheilitchulukhadze\.local\bin\wizard.cmd
+install-wizard.ps1: 
+install-wizard.ps1: Run: C:\Users\mikheilitchulukhadze\.local\bin\wizard.cmd --help
+Program 'wizard.cmd' failed to run: Access is deniedAt line:1 char:90
++ ... t.com/dbt-wizard/install/install-wizard.ps1 | iex; if ($?) { wizard }
++                                                                  ~~~~~~.
+At line:1 char:90
++ ... t.com/dbt-wizard/install/install-wizard.ps1 | iex; if ($?) { wizard }
++                                                                  ~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : NativeCommandFailed
+ 
+PS C:\Users\mikheilitchulukhadze> & c:/Users/mikheilitchulukhadze/dbt/Scriptws/Activate.ps1/Scripts/Activate.ps1
+Success Project created successfully!
+Info Project name: jaffle_shop
+Info Project directory: jaffle_shop
+Which would you like to do?: Use an existing profile from profiles.yml
+Select a profile to use: dbt_project (databricks)
+Info Using existing profile 'dbt_project'
+Success Set profile 'dbt_project' in dbt_project.yml
+Validating profile inputs, adapters, and connection
+
+   Loading ~/.dbt/profiles.yml
+
+===================================================================== Errors and Warnings =====================================================================[error] [InvalidConfig (dbt1005)]: Failed to parse profiles.yml: unknown variant `jaffle_shop`, expected one of `redshift`, `snowflake`, `postgres`, `bigquery`, `trino`, `datafusion`, `spark`, `databricks`, `salesforce`, `duckdb`, `alt`, `exasol`, `fabric`, `clickhouse`
+
+====================================================================== Execution Summary ======================================================================Finished 'init' with 1 error [9m 24s]
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze> cd jaffle_shop
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> cd models
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\models> dbt run
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+
+===================================================================== Errors and Warnings =====================================================================[error] [InvalidConfig (dbt1005)]: Failed to parse profiles.yml: unknown variant `jaffle_shop`, expected one of `redshift`, `snowflake`, `postgres`, `bigquery`, `trino`, `datafusion`, `spark`, `databricks`, `salesforce`, `duckdb`, `alt`, `exasol`, `fabric`, `clickhouse`
+
+====================================================================== Execution Summary ======================================================================Finished 'run' with 1 error [288ms]
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\models> dbt run
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+    Failed [  2.58s] model default.stg_customers (view)
+    Failed [  2.58s] model default.stg_locations (view)
+   Skipped [-------] model default.locations (table)
+    Failed [  2.71s] model default.stg_orders (view)
+    Failed [  2.72s] model default.stg_order_items (view)
+    Failed [  2.83s] model default.stg_products (view)
+   Skipped [-------] model default.products (table)
+    Failed [  2.94s] model default.stg_supplies (view)
+   Skipped [-------] model default.order_items (table)
+   Skipped [-------] model default.orders (table)
+   Skipped [-------] model default.customers (table)
+   Skipped [-------] model default.supplies (table)
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+===================================================================== Errors and Warnings =====================================================================[error] [TableNotFound (dbt0214)]: Could not find table 'workspace.default_raw.raw_stores' in the warehouse. If the table exists, its casing may not match how dbt resolves it — check the `quoting` config (database/schema/identifier) on the source or model so the compiled name matches the name stored in the warehouse.  --> models/staging/stg_locations.sql:6:19 (..\target\compiled\jaffle_shop\models\staging\stg_locations.sql:6:19)
+[error] [TableNotFound (dbt0214)]: Could not find table 'workspace.default_raw.raw_customers' in the warehouse. If the table exists, its casing may not match how dbt resolves it — check the `quoting` config (database/schema/identifier) on the source or model so the compiled name matches the name stored in the warehou
+  --> models/staging/stg_customers.sql:6:19 (..\target\compiled\jaffle_shop\models\staging\stg_customers.sql:6:19)
+[error] [TableNotFound (dbt0214)]: Could not find table 'workspace.default_raw.raw_orders' in the warehouse. If the table exists, its casing may not match how dbt resolves it — check the `quoting` config (database/schema/identifier) on the source or model so the compiled name matches the name stored in the warehouse.  --> models/staging/stg_orders.sql:6:19 (..\target\compiled\jaffle_shop\models\staging\stg_orders.sql:6:19)
+[error] [TableNotFound (dbt0214)]: Could not find table 'workspace.default_raw.raw_items' in the warehouse. If the table exists, its casing may not match how dbt resolves it — check the `quoting` config (database/schema/identifier) on the source or model so the compiled name matches the name stored in the warehouse.
+  --> models/staging/stg_order_items.sql:6:19 (..\target\compiled\jaffle_shop\models\staging\stg_order_items.sql:6:19)e.
+  --> models/staging/stg_products.sql:6:19 (..\target\compiled\jaffle_shop\models\staging\stg_products.sql:6:19)
+[error] [TableNotFound (dbt0214)]: Could not find table 'workspace.default_raw.raw_supplies' in the warehouse. If the table exists, its casing may not match how dbt resolves it — check the `quoting` config (database/schema/identifier) on the source or model so the compiled name matches the name stored in the warehouse.
+  --> models/staging/stg_supplies.sql:6:19 (..\target\compiled\jaffle_shop\models\staging\stg_supplies.sql:6:19)
+Finished 'run' with 6 errors for target 'dev' [22.9s]
+Processed: 12 models
+Summary: 12 total | 6 error | 6 skipped
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\models> dbt seeds
+error: unrecognized subcommand 'seeds'
+
+  tip: a similar subcommand exists: 'seed'
+
+Usage: dbt.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\models> cd ..
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt seeds
+error: unrecognized subcommand 'seeds'
+
+
+Usage: dbt.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt seed
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+ Succeeded [ 19.55s] seed  default_raw.raw_products (table)
+ Succeeded [ 19.57s] seed  default_raw.raw_customers (table)
+ Succeeded [ 19.60s] seed  default_raw.raw_stores (table)
+ Succeeded [ 19.70s] seed  default_raw.raw_supplies (table)
+ Succeeded [ 19.75s] seed  default_raw.raw_orders (table)
+ Succeeded [ 19.75s] seed  default_raw.raw_items (table)
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+====================================================================== Execution Summary ======================================================================Finished 'seed' successfully for target 'dev' [23.2s]
+Processed: 6 seeds
+Summary: 6 total | 6 success
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt run
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+ Succeeded [  3.92s] model default.stg_customers (view)
+ Succeeded [  4.07s] model default.stg_order_items (view)
+ Succeeded [  4.09s] model default.stg_locations (view)
+ Succeeded [  4.15s] model default.stg_products (view)
+ Succeeded [  4.16s] model default.stg_supplies (view)
+ Succeeded [  4.37s] model default.stg_orders (view)
+ Succeeded [  9.10s] model default.order_items (table)
+ Succeeded [  9.34s] model default.supplies (table)
+ Succeeded [  9.49s] model default.products (table)
+ Succeeded [  9.55s] model default.locations (table)
+ Succeeded [  4.03s] model default.orders (table)
+ Succeeded [  4.56s] model default.customers (table)
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+====================================================================== Execution Summary ======================================================================Finished 'run' successfully for target 'dev' [24.9s]
+Processed: 12 models
+Summary: 12 total | 12 success
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt test
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+    Passed [  3.52s] test  not_null_orders_order_id
+    Passed [  3.90s] test  not_null_stg_supplies_supply_uuid
+    Passed [  4.85s] test  unique_stg_orders_order_id
+    Passed [  5.06s] test  unique_order_items_order_item_id
+    Passed [  6.92s] test  not_null_stg_orders_order_id
+    Passed [  7.66s] test  unique_stg_products_product_id
+    Passed [  8.55s] test  dbt_utils_expression_is_true_orders_order_items_subtotal_subtotal
+    Passed [  9.04s] test  not_null_stg_customers_customer_id
+    Passed [  9.10s] test  dbt_utils_expression_is_true_orders_order_total_subtotal_tax_paid
+    Passed [  9.83s] test  unique_stg_customers_customer_id
+    Passed [ 11.73s] test  not_null_customers_customer_id
+    Passed [ 11.85s] test  unique_stg_locations_location_id
+    Passed [ 11.94s] test  unique_stg_supplies_supply_uuid
+    Passed [ 12.86s] test  relationships_order_items_order_id__order_id__ref_orders_
+    Failed [ 12.97s] test  dbt_utils_expression_is_true_customers_lifetime_spend_pretax_lifetime_tax_paid_lifetime_spend (models/marts/customers.yml:5:9)
+    Passed [ 13.13s] test  relationships_stg_order_items_order_id__order_id__ref_stg_orders_
+    Passed [ 13.22s] unit_test default_dbt_test__audit.test_does_location_opened_at_trunc_to_date
+    Passed [ 13.30s] test  not_null_stg_products_product_id
+    Passed [ 14.83s] test  unique_stg_order_items_order_item_id
+    Passed [ 15.25s] test  not_null_stg_order_items_order_id
+    Passed [ 16.24s] test  dbt_utils_expression_is_true_stg_orders_order_total_tax_paid_subtotal
+    Passed [ 16.38s] test  accepted_values_customers_customer_type__new__returning
+    Passed [ 16.61s] test  not_null_stg_locations_location_id
+    Passed [ 16.73s] test  unique_orders_order_id
+    Passed [ 17.03s] test  not_null_order_items_order_item_id
+    Passed [ 17.23s] test  unique_customers_customer_id
+    Passed [ 20.45s] unit_test default_dbt_test__audit.test_supply_costs_sum_correctly
+    Passed [ 21.28s] unit_test default_dbt_test__audit.test_order_items_compute_to_bools_correctly
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+======================================================================== Test Failures ========================================================================Test failed (35 failed row(s)): dbt_utils_expression_is_true_customers_lifetime_spend_pretax_lifetime_tax_paid_lifetime_spend
+
+====================================================================== Execution Summary ======================================================================Finished 'test' with 1 error for target 'dev' [22.3s]
+Processed: 27 tests | 3 unit tests
+Summary: 30 total | 29 success | 1 error
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt docs generate
+
+===================================================================== Errors and Warnings =====================================================================[warning] [DocsGenerateWarning (dbt1705)]: `dbt docs generate` is not supported. Use `dbt compile --write-catalog` to write catalog.json. To host docs locally, use the dbt Core index.html with catalog.json and manifest.json in the same directory: https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/task/docs/index.html
+
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt debug
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+ Debugging profile: dev
+ Debugging dbt version: 2.0.0-preview.204
+ Debugging platform: windows x86_64 (windows)
+ Debugging adapter type: databricks (remote)
+ Debugging dependencies:
+  git: OK
+ Debugging connection:
+  "schema": "default",
+  "host": "dbc-6ab04f91-d228.cloud.databricks.com",
+  "http_path": "/sql/1.0/warehouses/9ff283b2d930f773"
+ Debugging connection test: OK
+  Debugged All checks passed!
+
+====================================================================== Execution Summary ======================================================================Finished 'debug' successfully for target 'dev' [17.9s]
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> cd seeds
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\seeds> dbt seed 
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+ Succeeded [ 15.92s] seed  default_raw.raw_items (table)
+ Succeeded [ 16.66s] seed  default_raw.raw_supplies (table)
+ Succeeded [ 16.81s] seed  default_raw.raw_products (table)
+ Succeeded [ 16.84s] seed  default_raw.raw_stores (table)
+ Succeeded [ 17.15s] seed  default_raw.raw_orders (table)
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+====================================================================== Execution Summary ======================================================================Finished 'seed' successfully for target 'dev' [21.3s]
+Processed: 6 seeds
+Summary: 6 total | 6 success
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+===================================================================== Errors and Warnings =====================================================================[warning] [NoNodesForSelectionCriteria (dbt1092)]: The selection criterion 'fqn:raw_customers' does not match any enabled nodes
+[warning] [NoNodesSelected (dbt1601)]: Nothing to do. Try checking your model configs and model specification argsFinished 'run' with 2 warnings for target 'dev' [929ms]
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\seeds> databricks sql --query "select * from raw_customers"
+databricks : The term 'databricks' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or 
+if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ databricks sql --query "select * from raw_customers"
++ ~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (databricks:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\seeds> databricks sql --query "SELECT * FROM default_raw.raw_customers LIMIT 10"
+databricks : The term 'databricks' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or 
+if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ databricks sql --query "SELECT * FROM default_raw.raw_customers LIMIT ...
++ ~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (databricks:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop\seeds> cd ..
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt test
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+    Failed [ 17.17s] test  not_null_stg_order_items_order_id (models/staging/stg_order_items.yml:13:13)
+    Failed [ 17.24s] test  unique_stg_customers_customer_id (models/staging/stg_customers.yml:9:13)
+    Failed [ 17.32s] test  not_null_orders_order_id (models/marts/orders.yml:15:13)
+    Failed [ 17.40s] test  dbt_utils_expression_is_true_customers_lifetime_spend_pretax_lifetime_tax_paid_lifetime_spend (models/marts/customers.yml:5:9)
+    Failed [ 17.40s] test  unique_stg_locations_location_id (models/staging/stg_locations.yml:9:13)
+    Failed [ 17.40s] test  not_null_stg_supplies_supply_uuid (models/staging/stg_supplies.yml:11:13)
+    Failed [ 17.48s] test  relationships_order_items_order_id__order_id__ref_orders_ (models/marts/order_items.yml:10:13)
+    Failed [ 17.66s] test  unique_stg_orders_order_id (models/staging/stg_orders.yml:13:13)
+    Failed [ 18.24s] test  relationships_stg_order_items_order_id__order_id__ref_stg_orders_ (models/staging/stg_order_items.yml:14:13)
+    Failed [ 18.30s] test  not_null_stg_order_items_order_item_id (models/staging/stg_order_items.yml:8:13)
+    Failed [ 18.36s] test  not_null_stg_products_product_id (models/staging/stg_products.yml:8:13)
+    Failed [ 18.37s] test  not_null_order_items_order_item_id (models/marts/order_items.yml:6:13)
+    Failed [ 18.39s] test  unique_customers_customer_id (models/marts/customers.yml:13:13)
+    Failed [ 18.68s] test  unique_stg_products_product_id (models/staging/stg_products.yml:9:13)
+    Failed [ 19.76s] test  unique_orders_order_id (models/marts/orders.yml:16:13)
+    Failed [ 19.78s] test  unique_order_items_order_item_id (models/marts/order_items.yml:7:13)
+    Failed [ 19.82s] test  not_null_stg_customers_customer_id (models/staging/stg_customers.yml:8:13)
+    Failed [ 21.32s] test  dbt_utils_expression_is_true_orders_order_items_subtotal_subtotal (models/marts/orders.yml:5:9)
+    Failed [ 21.77s] test  relationships_orders_customer_id__customer_id__ref_stg_customers_ (models/marts/orders.yml:20:13)
+    Failed [ 21.93s] test  not_null_stg_orders_order_id (models/staging/stg_orders.yml:12:13)
+    Failed [ 21.94s] test  accepted_values_customers_customer_type__new__returning (models/marts/customers.yml:31:13)
+    Failed [ 22.12s] unit_test default_dbt_test__audit.test_order_items_compute_to_bools_correctly (models/marts/orders.yml:36:11)
+    Failed [ 22.30s] test  not_null_stg_locations_location_id (models/staging/stg_locations.yml:8:13)
+    Failed [ 22.42s] test  dbt_utils_expression_is_true_orders_order_total_subtotal_tax_paid (models/marts/orders.yml:8:9)
+    Failed [ 22.50s] test  dbt_utils_expression_is_true_stg_orders_order_total_tax_paid_subtotal (models/staging/stg_orders.yml:5:9)
+    Failed [ 22.59s] test  not_null_customers_customer_id (models/marts/customers.yml:12:13)
+    Failed [ 22.60s] test  unique_stg_supplies_supply_uuid (models/staging/stg_supplies.yml:12:13)
+    Failed [ 22.65s] test  unique_stg_order_items_order_item_id (models/staging/stg_order_items.yml:9:13)
+    Passed [ 29.36s] unit_test default_dbt_test__audit.test_supply_costs_sum_correctly
+    Passed [ 31.42s] unit_test default_dbt_test__audit.test_does_location_opened_at_trunc_to_date
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+===================================================================== Errors and Warnings =====================================================================[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_stg_order_items_order_id.2063801f96 (target\run\jaffle_shop\target\generic_tests\not_null_stg_order_items_order_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_order_items` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_stg_order_items_order_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_stg_customers_customer_id.c7614daada (target\run\jaffle_shop\target\generic_tests\unique_stg_customers_customer_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_customers` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_stg_customers_customer_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_orders_order_id.cf6c17daed (target\run\jaffle_shop\target\generic_tests\not_null_orders_order_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_orders_order_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.dbt_utils_expression_is_true_customers_lifetime_spend_pretax_lifetime_tax_paid_lifetime_spend.ad37c989b6 (target\run\jaffle_shop\target\generic_tests\dbt_utils_expression_is_true_c_177c20685a18a9071d4a71719e3d9565.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`customers` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 15 pos 5
+  (in run\jaffle_shop\target/generic_tests\dbt_utils_expression_is_true_c_177c20685a18a9071d4a71719e3d9565.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_stg_locations_location_id.2e2fc58ecc (target\run\jaffle_shop\target\generic_tests\unique_stg_locations_location_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_locations` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_stg_locations_location_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_stg_supplies_supply_uuid.515c6eda6d (target\run\jaffle_shop\target\generic_tests\not_null_stg_supplies_supply_uuid.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_supplies` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_stg_supplies_supply_uuid.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.relationships_order_items_order_id__order_id__ref_orders_.a799023ee8 (target\run\jaffle_shop\target\generic_tests\relationships_order_items_order_id__order_id__ref_orders_.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`order_items` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 15 pos 9
+  (in run\jaffle_shop\target/generic_tests\relationships_order_items_order_id__order_id__ref_orders_.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_stg_orders_order_id.e3b841c71a (target\run\jaffle_shop\target\generic_tests\unique_stg_orders_order_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_stg_orders_order_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.relationships_stg_order_items_order_id__order_id__ref_stg_orders_.dbe9930c54 (target\run\jaffle_shop\target\generic_tests\relationships_stg_order_items_b3d7cdbd08ebfad01e3226c01c10bba0.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_order_items` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 15 pos 9
+  (in run\jaffle_shop\target/generic_tests\relationships_stg_order_items_b3d7cdbd08ebfad01e3226c01c10bba0.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_stg_order_items_order_item_id.26a7e2bc35 (target\run\jaffle_shop\target\generic_tests\not_null_stg_order_items_order_item_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_order_items` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_stg_order_items_order_item_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_stg_products_product_id.6373b0acf3 (target\run\jaffle_shop\target\generic_tests\not_null_stg_products_product_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_products` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_stg_products_product_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_order_items_order_item_id.c6fda366bd (target\run\jaffle_shop\target\generic_tests\not_null_order_items_order_item_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`order_items` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_order_items_order_item_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_customers_customer_id.c5af1ff4b1 (target\run\jaffle_shop\target\generic_tests\unique_customers_customer_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`customers` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_customers_customer_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_stg_products_product_id.7d950a1467 (target\run\jaffle_shop\target\generic_tests\unique_stg_products_product_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_products` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_stg_products_product_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_orders_order_id.fed79b3a6e (target\run\jaffle_shop\target\generic_tests\unique_orders_order_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_orders_order_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_order_items_order_item_id.7d0a7e900a (target\run\jaffle_shop\target\generic_tests\unique_order_items_order_item_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`order_items` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_order_items_order_item_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_stg_customers_customer_id.e2cfb1f9aa (target\run\jaffle_shop\target\generic_tests\not_null_stg_customers_customer_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_customers` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_stg_customers_customer_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.dbt_utils_expression_is_true_orders_order_items_subtotal_subtotal.b1416e07ec (target\run\jaffle_shop\target\generic_tests\dbt_utils_expression_is_true_o_c0acd0b625f5605c61af04356663a823.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 15 pos 5
+  (in run\jaffle_shop\target/generic_tests\dbt_utils_expression_is_true_o_c0acd0b625f5605c61af04356663a823.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.relationships_orders_customer_id__customer_id__ref_stg_customers_.918495ce16 (target\run\jaffle_shop\target\generic_tests\relationships_orders_0389c224a99a98c0b58aedb753f052f0.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 15 pos 9
+  (in run\jaffle_shop\target/generic_tests\relationships_orders_0389c224a99a98c0b58aedb753f052f0.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_stg_orders_order_id.81cfe2fe64 (target\run\jaffle_shop\target\generic_tests\not_null_stg_orders_order_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_stg_orders_order_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.accepted_values_customers_customer_type__new__returning.d12f0947c8 (target\run\jaffle_shop\target\generic_tests\accepted_values_customers_customer_type__new__returning.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`customers` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 19 pos 9
+  (in run\jaffle_shop\target/generic_tests\accepted_values_customers_customer_type__new__returning.sql:1:1)
+[error] [JinjaError (dbt1501)]: Internal error while evaluating macro to infer schema for unit test unit_test.jaffle_shop.orders.test_order_items_compute_to_bools_correctly: execution error: failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 8 pos 18
+(in models/marts/orders.yml:8:11)
+(in dbt_internal_packages\dbt-adapters\macros\etc\statement.sql:51:11)
+(in dbt_internal_packages\dbt-adapters\macros\etc\statement.sql:14:35)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_stg_locations_location_id.3d237927d2 (target\run\jaffle_shop\target\generic_tests\not_null_stg_locations_location_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_locations` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_stg_locations_location_id.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.dbt_utils_expression_is_true_orders_order_total_subtotal_tax_paid.2aba85df92 (target\run\jaffle_shop\target\generic_tests\dbt_utils_expression_is_true_o_bf2cfee53d5bb32a0a918086ae35fff9.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 15 pos 5
+  (in run\jaffle_shop\target/generic_tests\dbt_utils_expression_is_true_o_bf2cfee53d5bb32a0a918086ae35fff9.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.dbt_utils_expression_is_true_stg_orders_order_total_tax_paid_subtotal.bfb885d7fc (target\run\jaffle_shop\target\generic_tests\dbt_utils_expression_is_true_s_fc9f3efa92425b23fb62ee5a96c17e3f.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_orders` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 15 pos 5
+  (in run\jaffle_shop\target/generic_tests\dbt_utils_expression_is_true_s_fc9f3efa92425b23fb62ee5a96c17e3f.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.not_null_customers_customer_id.5c9bf9911d (target\run\jaffle_shop\target\generic_tests\not_null_customers_customer_id.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`customers` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 16 pos 5
+  (in run\jaffle_shop\target/generic_tests\not_null_customers_customer_id.sql:1:1)_tests\unique_stg_supplies_supply_uuid.sql)
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_supplies` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_stg_supplies_supply_uuid.sql:1:1)
+[error] [DbDriverFailed (dbt1308)]: Error materializing test test.jaffle_shop.unique_stg_order_items_order_item_id.90e333a108 (target\run\jaffle_shop\target\ge
+  failed to execute query: databricks: execution error: failed to execute query: unexpected operation state ERROR_STATE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `workspace`.`default`.`stg_order_items` cannot be found. Verify the spelling and correctness of the schema and catalog.
+  Search path: [`system`.`session`, `system`.`builtin`, `system`.`ai`, `workspace`.`default`].
+  If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+  To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01; line 17 pos 5
+  (in run\jaffle_shop\target/generic_tests\unique_stg_order_items_order_item_id.sql:1:1)
+
+====================================================================== Execution Summary ======================================================================Finished 'test' with 28 errors for target 'dev' [33.7s]
+Processed: 27 tests | 3 unit tests
+Summary: 30 total | 2 success | 28 error
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt docs generate
+
+===================================================================== Errors and Warnings ======================================================================[warning] [DocsGenerateWarning (dbt1705)]: `dbt docs generate` is not supported. Use `dbt compile --write-catalog` to write catalog.json. To host docs locally, use the dbt Core index.html with catalog.json and manifest.json in the same directory: https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/task/docs/index.html
+
+====================================================================== Execution Summary =======================================================================Finished 'docs' with 1 warning [281ms]
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> dbt compile --write-catalog
+dbt-fusion 2.0.0-preview.204
+   Loading ~/.dbt/profiles.yml
+   Loading packages.yml
+Fetching catalog from warehouse
+Fetched full catalog.json results
+Successfully wrote catalog.json
+New version available 2.0.0-preview.205 (run `dbt system update`)
+
+====================================================================== Execution Summary =======================================================================Finished 'compile' successfully for target 'dev' [5.1s]
+Processed: 12 models | 27 tests | 6 seeds
+Summary: 45 total | 45 success
+(Activate.ps1) PS C:\Users\mikheilitchulukhadze\jaffle_shop> 
